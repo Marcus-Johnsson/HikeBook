@@ -27,10 +27,10 @@ function init() {
         layers: [openStreetMapHumanitarian]
 
     })
+
     map.addLayer(openStreetMapHumanitarian);
     // Vector Layer
     // http://geojson.io/#map=2/20.0/0.0
-    
 
     const pathStyle = new ol.style.Stroke({
         color: [46, 45, 45],
@@ -67,24 +67,60 @@ function init() {
 
 
     const popup = document.getElementById('popup');
-    const popupImage = document.getElementById('popup-image');
-
     const overlay = new ol.Overlay({
         element: popup,
         autoPan: true,
         autoPanAnimation: {
             duration: 250
         }
-        // Create a Layer for picture
     });
+
     map.addOverlay(overlay);
+
+
+    const pathLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: './data/vector_data/map.geojson',
+            format: new ol.format.GeoJSON()
+        }),
+        style: function (feature) {
+            const type = feature.getGeometry().getType();
+            const markerType = feature.get('markerType');
+
+            if (type === 'Point') {
+                if (markerType === 'photo') {
+                    return new ol.style.Style({
+                        image: picturePinStyle
+                    });
+                } else {
+                    return new ol.style.Style({
+                        image: circleStyle
+                    });
+                }
+            }
+            if (type === 'LineString') {
+                return new ol.style.Style({
+                    stroke: pathStyle
+                });
+            }
+        },
+        visible: false,
+    });
+    map.addLayer(pathLayer);
+
+    const initialZoom = map.getView().getZoom();
+    if (initialZoom >= 12) {
+        pathLayer.setVisible(true);
+    } else {
+        pathLayer.setVisible(false);
+    }
 
     map.on('singleclick', function (evt) {
         const feature = map.forEachFeatureAtPixel(evt.pixel, function (feat) {
             return feat;
         });
 
-        // Always hide popup first
+
         popup.style.display = 'none';
         overlay.setPosition(undefined);
 
@@ -98,33 +134,33 @@ function init() {
 
 
         if (markerType === 'photo') {
-            popup.innerHTML = 
-            `
+            popup.innerHTML =
+                `
             <strong style="font-size: 1vw; white-space: nowrap;">${title}</strong><br>
             <strong style="font-size: 1vw;">${date}</strong><br>
                 <img src="${imageUrl}" alt="Photo" style="max-width:450px; max-height:550px; margin-top:5px;">
             `;
-        } else {
-            popup.innerHTML = 
-            `
+        } else if (markerType === 'point') {
+            popup.innerHTML =
+                `
              <strong style="font-size: 1vw; white-space: nowrap;">${title}</strong><br>
             <strong style="font-size: 1vw;">${date}</strong><br>
             `;
         }
-
+        else {
+            return false
+        }
         // Show and position popup
         popup.style.display = 'block';
         overlay.setPosition(coordinate);
     });
-
-
 
     const EssingeIslandsGeoJSON = new ol.layer.VectorImage({
         source: new ol.source.Vector({
             url: './data/vector_data/map.geojson',
             format: new ol.format.GeoJSON()
         }),
-        visible: true,
+        visible: false,
         title: 'Essingen',
         style: function (feature) {
             const type = feature.getGeometry().getType();
@@ -153,9 +189,14 @@ function init() {
     map.addLayer(EssingeIslandsGeoJSON);
 
 
-
-
-
+    map.getView().on('change:resolution', function () {
+        const zoom = map.getView().getZoom();
+        if (zoom >= 12) {
+            pathLayer.setVisible(true);
+        } else {
+            pathLayer.setVisible(false);
+        }
+    });
 
 
 }
