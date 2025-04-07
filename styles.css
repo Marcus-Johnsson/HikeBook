@@ -1,3 +1,108 @@
+x{
+    border-color: red;
+    border-style: solid;
+}
+
+.view {
+    display: flex;
+    width: 100vw;
+}
+.flex1, .flex2, .flex5 {
+    display: flex;
+    flex-wrap: wrap; 
+}
+.flex5{
+    flex: 5;
+    display: flex;
+}
+.flex2{
+    flex: 2;
+    display: flex;
+}
+.flex1{
+    flex: 1;
+    display: flex;
+}
+body{
+    background-color: rgb(99, 95, 95);
+}
+@media(min-width: 601px) {
+
+    header,
+    main,
+    footer
+    {
+        display: flex;
+        flex-direction: row;
+    }
+}
+.loggin{
+    
+    background-color: rgb(201, 201, 201);
+    border-style: solid;
+    border-width: 1em;
+    border-color: rgb(56, 7, 7);
+    border-radius: 1.4em;   
+}
+
+@media(max-width: 600px) {
+
+    header,
+    main,
+    footer
+    {
+        display: flex;
+        flex-direction: column;
+    }
+}
+.bordermenu{
+    background-color: rgb(178, 176, 176);
+    opacity: 90%;
+    border-radius: 1.3em;
+    border-width: 0.4em;
+    border-style: solid;
+    border-color: rgb(56, 7, 7);
+
+    display: flex;
+}
+.main{
+    position: relative;
+    display: flex;
+    margin-left:7%;
+    column-gap: 1em;    
+}
+.menubarimage {
+    background-image: url('./Picture/forestpathbackground.png');
+    opacity: 80%;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    height: auto;
+    object-fit: fill;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-radius: 1em;
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 1em;
+}
+.hikebook{
+    color: rgb(229, 28, 28, 0.798);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+.map{
+    width: 50vw;
+    height: 28vw;    
+}
+.centered{
+    width: 100%;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
 * {
     box-sizing: border-box;
 }
@@ -6,12 +111,7 @@ body{
     padding: 0
 }
 
-.grid-container
-{
-    display: grid;
-    grid-template-columns: 20vw 80vw;
-    grid-template-rows: 100vh;
-}
+
 .sidebar{
     margin-left: 15px;
 }
@@ -19,8 +119,29 @@ body{
     display:flex;
     position:absolute;
     background:white;
-    padding:5px;
+    padding:10px;
     border:10px solid #8a7575;
-    font-size: 16px;
-    min-width: 390px;
+    font-size: 16px;    /*Below fix screen size for different screnns*/
+    max-width: 300px;
+    min-width: 160px;
+    height: auto;
+    min-height: auto; 
+    max-height: 500px;
+    overflow-y: auto; 
+    font-size: 14px;
+    border-radius: 8px; 
+}
+@media (max-width: 600px) {
+    .popup {
+        width: 90%; 
+        height: auto;
+        padding: 15px;
+        font-size: 12px; 
+    }
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+    .popup {
+        width: 70%; 
+        font-size: 14px;
+    }
 }

@@ -3,28 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treasure hunt</title>
+    <title>HikeBook</title>
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./libs/v6.5.0-dist/ol.css" >
+    <link rel="stylesheet" href="./libs/v6.5.0-dist/ol.css">
 </head>
 
 <body>
-    <div class="grid-container">
-        <div class="grid-1">
-            <div class="sidebar">
-         
+    <header>
+        <div class="bordermenu view">
+            <div class="menubarimage ">
+                <h1 class="hikebook">HikeBook</h1>
             </div>
         </div>
+    </header>
+    <main class="container">
+        <div>
+            <div class="flex2"></div>
 
+            <div class="flex5">
+                <div id="js-map" class="map"></div>
+            </div>
 
-    <div class="grid-2">
-        <div id="js-map" class="map"></div>
-    </div>
-    <div id="popup" class="popup" >
-        <img id="popup-image"  alt="Photo" >
-    </div>
-</div>
+            <div id="popup" class="popup">
+                <img id="popup-image" alt="Photo">
+            </div>
+            <div class="bordermenu flex2">
+                <div class="flex2">
+                    <div>
+                        <h2 class="centered">Mest gillade promenader</h2>
+                        <div class="flex1">
+                        </div>
+                        <div class="flex2"></div>
+                        <div class="flex1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
+    <footer>
+        <div class="bordermenu view">
+            <div class="menubarimage ">
+                <h1 class="hikebook">Walk the path you want</h1>
+            </div>
+        </div>
+    </footer>
 
 
     <div id="js-map" class="map"></div>

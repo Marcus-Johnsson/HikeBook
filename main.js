@@ -12,6 +12,7 @@ function init() {
         }),
         target: "js-map"
     });
+
     const openStreetMapHumanitarian = new ol.layer.Tile({
         source: new ol.source.OSM({
             url: "https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
@@ -29,6 +30,7 @@ function init() {
     map.addLayer(openStreetMapHumanitarian);
     // Vector Layer
     // http://geojson.io/#map=2/20.0/0.0
+    
 
     const pathStyle = new ol.style.Stroke({
         color: [46, 45, 45],
@@ -38,7 +40,7 @@ function init() {
     })
     const strokeStyle = new ol.style.Stroke({
         color: [46, 45, 45, 1],
-        width: 5,
+        width: 2,
 
         // General info 
     })
@@ -46,7 +48,7 @@ function init() {
         fill: new ol.style.Fill({
             color: [255, 102, 0]
         }),
-        radius: 22,
+        radius: 8,
         stroke: strokeStyle,
 
 
@@ -57,7 +59,7 @@ function init() {
         fill: new ol.style.Fill({
             color: [55, 22, 222]
         }),
-        radius: 22,
+        radius: 8,
         stroke: strokeStyle,
 
         // Picture pins
