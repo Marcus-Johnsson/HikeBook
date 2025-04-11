@@ -1,76 +1,58 @@
-x{
+*{
     border-color: red;
     border-style: solid;
+}
+
+body {
+    background-color: rgb(99, 95, 95);
+    margin: 0;
+    padding: 0;
 }
 
 .view {
     display: flex;
     width: 100vw;
 }
+
 .flex1, .flex2, .flex5 {
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
-.flex5{
-    flex: 5;
-    display: flex;
-}
-.flex2{
-    flex: 2;
-    display: flex;
-}
-.flex1{
-    flex: 1;
-    display: flex;
-}
-body{
-    background-color: rgb(99, 95, 95);
-}
-@media(min-width: 601px) {
 
-    header,
-    main,
-    footer
-    {
-        display: flex;
-        flex-direction: row;
-    }
-}
-.loggin{
+.flex5 {
+    flex: 5; /* This will hold the main content */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     
-    background-color: rgb(201, 201, 201);
-    border-style: solid;
-    border-width: 1em;
-    border-color: rgb(56, 7, 7);
-    border-radius: 1.4em;   
 }
 
-@media(max-width: 600px) {
-
-    header,
-    main,
-    footer
-    {
-        display: flex;
-        flex-direction: column;
-    }
+.flex2 {
+    flex: 2;
 }
-.bordermenu{
+
+.flex1 {
+    flex: 1;
+}
+
+.bordermenu {
     background-color: rgb(178, 176, 176);
     opacity: 90%;
     border-radius: 1.3em;
     border-width: 0.4em;
     border-style: solid;
     border-color: rgb(56, 7, 7);
-
     display: flex;
 }
-.main{
+
+.main {
     position: relative;
     display: flex;
-    margin-left:7%;
-    column-gap: 1em;    
+    margin-left: 7%;
+    column-gap: 1em;
 }
+
 .menubarimage {
     background-image: url('./Picture/forestpathbackground.png');
     opacity: 80%;
@@ -82,66 +64,106 @@ body{
     padding-bottom: 1em;
     border-radius: 1em;
 }
+.flex-map {
+    flex: 3; /* Adjust width for the map */
+}
+#info{
+    height: 100%;
+    
+}
+.white{
+    background-color: aliceblue;
+    border-radius: 1em;
+    border-style: solid;
+    padding: 1em;
+}
+
+.flex-info {
+    flex: 3; /* Same width for the info box */
+    padding-left: 1em;
+    max-width: 500px; /* Optional: Adjust max width */
+    height: 100%; /* Ensure it takes full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content at the top */
+}
+.flex-row {
+    display: flex;
+    flex-direction: row; /* Ensures the map and info box are side by side */
+    justify-content: space-between;
+    height: 65%;
+}
 .container {
-    max-width: 1200px;
+    max-width: auto;
     margin: auto;
     padding: 1em;
 }
-.hikebook{
+
+.hikebook {
     color: rgb(229, 28, 28, 0.798);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
 }
-.map{
+
+.map {
     width: 50vw;
-    height: 28vw;    
-}
-.centered{
-    width: 100%;
+    height: 60vw; /* Ensures the map is a square */
+    max-height: 100%;
+ }
+
+.centered {
+    width: auto;
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
 }
 
-* {
-    box-sizing: border-box;
-}
-body{
-    margin: 0;
-    padding: 0
-}
-
-
-.sidebar{
+.sidebar {
     margin-left: 15px;
 }
-.popup{
-    display:flex;
-    position:absolute;
-    background:white;
-    padding:10px;
-    border:10px solid #8a7575;
-    font-size: 16px;    /*Below fix screen size for different screnns*/
+
+.popup {
+    display: flex;
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border: 10px solid #8a7575;
+    font-size: 16px;
     max-width: 300px;
     min-width: 160px;
     height: auto;
-    min-height: auto; 
+    min-height: auto;
     max-height: 500px;
-    overflow-y: auto; 
+    overflow-y: auto;
     font-size: 14px;
-    border-radius: 8px; 
+    border-radius: 8px;
 }
+
 @media (max-width: 600px) {
     .popup {
-        width: 90%; 
+        width: 90%;
         height: auto;
         padding: 15px;
-        font-size: 12px; 
+        font-size: 12px;
+    }
+
+    header,
+    main,
+    footer {
+        display: flex;
+        flex-direction: column;
     }
 }
+
 @media (min-width: 601px) and (max-width: 1024px) {
     .popup {
-        width: 70%; 
+        width: 70%;
         font-size: 14px;
+    }
+
+    header,
+    main,
+    footer {
+        display: flex;
+        flex-direction: row;
     }
 }
