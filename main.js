@@ -5,7 +5,8 @@ window.onload = init;
 function init() {
     const map = new ol.Map({
         view: new ol.View({
-            center: ol.proj.fromLonLat([17.99000012504559, 59.32261248448822]),
+            center: ol.proj.fromLonLat([  16.04114482475069,
+                59.0816253103778 ]),
             zoom: 17,
             maxZoom: 19,
             minZoom: 5,
@@ -65,6 +66,16 @@ function init() {
         // Picture pins
     });
 
+    const infoHikeStart = new ol.style.Circle({
+        fill: new ol.style.Fill({
+            color: [55, 222, 222]
+        }),
+        radius: 8,
+        stroke: strokeStyle,
+
+        // Info pin
+    });
+
 
     const popup = document.getElementById('popup');
     const overlay = new ol.Overlay({
@@ -80,7 +91,7 @@ function init() {
 
     const pathLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
-            url: './data/vector_data/map.geojson',
+            url: 'https://localhost:7040/api/hike',
             format: new ol.format.GeoJSON()
         }),
         style: function (feature) {
@@ -119,8 +130,6 @@ function init() {
         const feature = map.forEachFeatureAtPixel(evt.pixel, function (feat) {
             return feat;
         });
-
-
         popup.style.display = 'none';
         overlay.setPosition(undefined);
 
@@ -129,15 +138,16 @@ function init() {
         const coordinate = evt.coordinate;
         const markerType = feature.get('markerType');
         const title = feature.get('title') || "No Title";
-        const date = feature.get('date') || "";
+        const date = feature.get('Date') || "";
         const imageUrl = feature.get('picture');
-
+        const description = feature.get('description' || "");
 
         if (markerType === 'photo') {
             popup.innerHTML =
                 `
             <strong style="font-size: 1vw; white-space: nowrap;">${title}</strong><br>
             <strong style="font-size: 1vw;">${date}</strong><br>
+            <strong style="font-size: 1vw;">${description}</strong><br>
                 <img src="${imageUrl}" alt="Photo" style="max-width:450px; max-height:550px; margin-top:5px;">
             `;
         } else if (markerType === 'point') {
@@ -145,6 +155,8 @@ function init() {
                 `
              <strong style="font-size: 1vw; white-space: nowrap;">${title}</strong><br>
             <strong style="font-size: 1vw;">${date}</strong><br>
+                        <strong style="font-size: 1vw;">${description}</strong><br>
+
             `;
         }
         else {
@@ -157,7 +169,7 @@ function init() {
 
     const EssingeIslandsGeoJSON = new ol.layer.VectorImage({
         source: new ol.source.Vector({
-            url: './data/vector_data/map.geojson',
+            url: 'https://localhost:7040/api/hike',
             format: new ol.format.GeoJSON()
         }),
         visible: false,
@@ -188,15 +200,14 @@ function init() {
     })
     map.addLayer(EssingeIslandsGeoJSON);
 
-
     map.getView().on('change:resolution', function () {
         const zoom = map.getView().getZoom();
-        if (zoom >= 12) {
-            pathLayer.setVisible(true);
-        } else {
-            pathLayer.setVisible(false);
+        if (zoom < 12 && !map.get('zoomPinShown')) {
+            showZoomOutPin();
+            map.set('zoomPinShown', true);
+        } else if (zoom >= 12 && map.get('zoomPinShown')) {
+            removeZoomOutPin();
+            map.set('zoomPinShown', false);
         }
     });
-
-
 }
