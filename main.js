@@ -143,21 +143,35 @@ function init() {
             zoomOutPinSource.clear();
     
             data.features.forEach(feature => {
-                console.log('Feature values:', feature.values);  // Log the values of each feature
+                console.log('Feature values:', feature.values);  
     
                 if (feature.geometry.type === 'LineString') {
                     const firstCoord = feature.geometry.coordinates[0];
                     const transformedCoord = ol.proj.fromLonLat([firstCoord[0], firstCoord[1]]);
     
-                    // Safely access Title and Description from feature.values
                     const title = feature.properties ? feature.properties.title : 'Hike Start';
-                    const description = feature.properties ? feature.properties.description : 'ss';
-    
+                    const description = feature.properties ? feature.properties.description : 'no describtion';
+                    const season = feature.properties ? feature.properties.season : 'no season';
+                    const difficulty = feature.properties ? feature.properties.difficulty : 'no difficulty';
+                    const path = feature.properties ? feature.properties.pathType : 'no path info';
+                    const length = feature.properties ? feature.properties.length : 'no length info';
+                    const terrain = feature.properties ? feature.properties.terrain : 'no terrain info';
+                    const date = feature.properties ? feature.properties.terrain : 'no date info';
+
+
+
                     // Create a zoom-out pin at the first coordinate
                     const pin = new ol.Feature({
                         geometry: new ol.geom.Point(transformedCoord),
                         title: title,
-                        description: description
+                        description: description,
+                        season: season,
+                        difficulty: difficulty,
+                        pathType: path,
+                        date: date,
+                        length: length,
+                        terrain: terrain,
+
                     });
     
                     pin.set('markerType', 'zoomoutpin');
@@ -193,11 +207,15 @@ function init() {
 
         const coordinate = evt.coordinate;
         const markerType = feature.get('markerType');
-        const title = feature.get('title') || "No Title";
-        const date = feature.get('Date') || "- -";
-        const imageUrl = feature.get('picture');
-        const description = feature.get('description' || "- -");
-        const difficulty = feature.get('difficulty' || "- -");
+        const title = feature.get('title') || "--";
+        const date = feature.get('date') || "--";
+        const imageUrl = feature.get('picture') || "--";
+        const description = feature.get('description') || "--";
+        const difficulty = feature.get('difficulty') || "--";
+        const season = feature.get('season') || "--";
+        const length = feature.get('length') || "--";
+        const pathType = feature.get('pathType') || "--";
+        const terrain = feature.get('terrain') || "--"
 
         if (markerType === 'photo') {
             popup.innerHTML =
@@ -216,13 +234,15 @@ function init() {
             `;
         }
         else if (markerType === 'zoomoutpin') {
-            document.getElementById('hike-title').textContent = title;
-        document.getElementById('hike-date').textContent = hike.date;
-        document.getElementById('hike-season').textContent = hike.season;
-        document.getElementById('hike-description').textContent = hike.description;
-        document.getElementById('hike-difficulty').textContent = hike.difficulty;
-        document.getElementById('hike-pathType').textContent = hike.pathType;
-        document.getElementById('hike-length').textContent = hike.length;
+        document.getElementById('hike-title').textContent = title
+        document.getElementById('hike-date').textContent = date
+        document.getElementById('hike-season').textContent = season
+        document.getElementById('hike-description').textContent = description
+        document.getElementById('hike-difficulty').textContent = difficulty
+        document.getElementById('hike-pathType').textContent = pathType
+        document.getElementById('hike-length').textContent = length
+        document.getElementById('hike-terrain').textContent = terrain
+
 
         }
         else {
@@ -241,10 +261,14 @@ function init() {
         const coord = evt.coordinate;
         const title = feature.get('title') || feature.get('Title') || 'No Title';
         const description = feature.get('description') || '';
+        const photo = feature.get('photo')||'';
     
         popup.innerHTML = `
             <strong style="font-size: 1vw;">${title}</strong><br>
             <span style="font-size: 1vw;">${description}</span>
+            <img src="${photo}" alt="Photo" style=" max-width: auto;
+    min-width: auto; margin-top: 5px;">`
+    `;
         `;
         popup.style.display = 'block';
         overlay.setPosition(coord);
@@ -297,25 +321,8 @@ function init() {
             pathLayer.setVisible(false);
         }
     
-        // Toggle zoom-out pins
-        if (zoom < 12 && !map.get('zoomPinShown')) {
-            showZoomOutPin();
-            map.set('zoomPinShown', true);
-        } else if (zoom >= 12 && map.get('zoomPinShown')) {
-            removeZoomOutPin();
-            map.set('zoomPinShown', false);
-        }
+
     });
 
-    function updateHikeInfo(hike) {
-        // Update the content of the info box with hike details
-        document.getElementById('hike-title').textContent = hike.title;
-        document.getElementById('hike-date').textContent = hike.date;
-        document.getElementById('hike-season').textContent = hike.season;
-        document.getElementById('hike-description').textContent = hike.description;
-        document.getElementById('hike-difficulty').textContent = hike.difficulty;
-        document.getElementById('hike-pathType').textContent = hike.pathType;
-        document.getElementById('hike-length').textContent = hike.length;
 
-    }
 }
